@@ -1,20 +1,18 @@
-
 // iOS View Transitions
 // -------------------------------
 
-$ios-transition-duration:              450ms !default;
-$ios-transition-timing-function:       cubic-bezier(.3, .9, .4, 1) !default;
-$ios-transition-container-bg-color:    #000 !default;
-
+$ios-transition-duration: 450ms !default;
+$ios-transition-timing-function: cubic-bezier(.3, .9, .4, 1) !default;
+$ios-transition-container-bg-color: #000 !default;
 
 [nav-view-transition="ios"] {
 
   [nav-view="entering"],
   [nav-view="leaving"] {
-    @include transition-duration( $ios-transition-duration );
-    @include transition-timing-function( $ios-transition-timing-function );
+    @include transition-duration($ios-transition-duration);
+    @include transition-timing-function($ios-transition-timing-function);
     -webkit-transition-property: opacity, -webkit-transform;
-            transition-property: opacity, transform;
+    transition-property: opacity, transform;
   }
 
   &[nav-view-direction="forward"],
@@ -35,8 +33,6 @@ $ios-transition-container-bg-color:    #000 !default;
 
 }
 
-
-
 // iOS Nav Bar Transitions
 // -------------------------------
 
@@ -45,17 +41,17 @@ $ios-transition-container-bg-color:    #000 !default;
   .title,
   .buttons,
   .back-text {
-    @include transition-duration( $ios-transition-duration );
-    @include transition-timing-function( $ios-transition-timing-function );
+    @include transition-duration($ios-transition-duration);
+    @include transition-timing-function($ios-transition-timing-function);
     -webkit-transition-property: opacity, -webkit-transform;
-            transition-property: opacity, transform;
+    transition-property: opacity, transform;
   }
 
   [nav-bar="active"],
   [nav-bar="entering"] {
     z-index: $z-index-bar-above;
 
-   .bar {
+    .bar {
       background: transparent;
     }
   }
@@ -70,23 +66,20 @@ $ios-transition-container-bg-color:    #000 !default;
 
 }
 
-
-
 // Android View Transitions
 // -------------------------------
 
-$android-transition-duration:             200ms !default;
-$android-transition-timing-function:      cubic-bezier(0.4, 0.6, 0.2, 1) !default;
-
+$android-transition-duration: 200ms !default;
+$android-transition-timing-function: cubic-bezier(0.4, 0.6, 0.2, 1) !default;
 
 [nav-view-transition="android"] {
 
   [nav-view="entering"],
   [nav-view="leaving"] {
-    @include transition-duration( $android-transition-duration );
-    @include transition-timing-function( $android-transition-timing-function );
+    @include transition-duration($android-transition-duration);
+    @include transition-timing-function($android-transition-timing-function);
     -webkit-transition-property: -webkit-transform;
-            transition-property: transform;
+    transition-property: transform;
   }
 
   [nav-view="active"],
@@ -102,8 +95,6 @@ $android-transition-timing-function:      cubic-bezier(0.4, 0.6, 0.2, 1) !defaul
 
 }
 
-
-
 // Android Nav Bar Transitions
 // -------------------------------
 
@@ -111,17 +102,17 @@ $android-transition-timing-function:      cubic-bezier(0.4, 0.6, 0.2, 1) !defaul
 
   .title,
   .buttons {
-    @include transition-duration( $android-transition-duration );
-    @include transition-timing-function( $android-transition-timing-function );
+    @include transition-duration($android-transition-duration);
+    @include transition-timing-function($android-transition-timing-function);
     -webkit-transition-property: opacity;
-            transition-property: opacity;
+    transition-property: opacity;
   }
 
   [nav-bar="active"],
   [nav-bar="entering"] {
     z-index: $z-index-bar-above;
 
-   .bar {
+    .bar {
       background: transparent;
     }
   }
@@ -136,8 +127,6 @@ $android-transition-timing-function:      cubic-bezier(0.4, 0.6, 0.2, 1) !defaul
 
 }
 
-
-
 // Transition Settings
 // -------------------------------
 
@@ -148,7 +137,7 @@ $android-transition-timing-function:      cubic-bezier(0.4, 0.6, 0.2, 1) !defaul
 
 [nav-view="stage"] {
   opacity: 0;
-  @include transition-duration( 0 );
+  @include transition-duration(0);
 }
 
 [nav-bar="stage"] {
