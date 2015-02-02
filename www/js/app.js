@@ -1,6 +1,6 @@
 // Ionic Starter App
 
-angular.module('backOffice', ['ionic', 'backOffice.controllers'])
+angular.module('backOffice', ['ionic', 'backOffice.controllers', 'backOffice.services'])
 
 	.run(function ($ionicPlatform) {
 		$ionicPlatform.ready(function () {
@@ -26,6 +26,22 @@ angular.module('backOffice', ['ionic', 'backOffice.controllers'])
 				controller: 'AppCtrl'
 			})
 
+			.state('login',{
+				url: "/login",
+				templateUrl: "templates/login.html",
+				controller: 'LoginCtrl'
+			})
+
+			.state('app.category', {
+				url: "/categories",
+				views: {
+					'menuContent': {
+						templateUrl: "templates/category.html",
+						controller: 'CategoryCtrl'
+					}
+				}
+			})
+
 			.state('app.search', {
 				url: "/search",
 				views: {
@@ -43,15 +59,6 @@ angular.module('backOffice', ['ionic', 'backOffice.controllers'])
 					}
 				}
 			})
-			.state('app.playlists', {
-				url: "/playlists",
-				views: {
-					'menuContent': {
-						templateUrl: "templates/playlists.html",
-						controller: 'PlaylistsCtrl'
-					}
-				}
-			})
 
 			.state('app.single', {
 				url: "/playlists/:playlistId",
@@ -62,6 +69,7 @@ angular.module('backOffice', ['ionic', 'backOffice.controllers'])
 					}
 				}
 			});
+
 		// if none of the above states are matched, use this as the fallback
-		$urlRouterProvider.otherwise('/app/playlists');
+		$urlRouterProvider.otherwise('/login');
 	});

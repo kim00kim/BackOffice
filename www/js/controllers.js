@@ -32,10 +32,71 @@ angular.module('backOffice.controllers', [])
 		 }, 1000);
 		 };*/
 
-
 	})
 
-	.controller('PlaylistsCtrl', function ($scope) {
+	.controller('LoginCtrl', function ($scope, $state, AdminAccount, AdminService) {
+		$scope.user_input={}
+
+		$scope.login = function (input){
+			console.log(input)
+			AdminAccount.checkUser(input).success(function (response) {
+				console.log(("Response: " +response))
+				if (!response) {
+					alert("Incorrect username and password!")
+				}
+				else {
+					alert("Logged in successfully!")
+					$state.go('app.category')
+//					AdminService.setAdmin(response)
+					//UserService.setUser(response)
+					//UserService.setUserType(response.user_type)
+					//var user = UserService.getUserType()
+				}
+			})
+		}
+	})
+
+	.controller('CategoryCtrl', function ($scope, $state, $ionicModal, CategoryService) {
+		$scope.new_category = {};
+		$scope.categories = [];
+
+		CategoryService.getAllCategories().success(function(response){
+			console.log(response)
+			if(!response)
+				alert("Couldn't get categories.")
+			else{
+				$scope.predicate = 'category_name'
+				$scope.categories = response
+//				console.log($scope.categories)
+			}
+		})
+
+		$ionicModal.fromTemplateUrl('templates/create-category.html', {
+			scope: $scope,
+			animation: 'slide-in-right' //or slide-left-right-ios7
+		}).then(function (modal) {
+			$scope.createCategory = modal;
+		});
+
+		//add category in service
+		$scope.createNewCategory = function (new_category) {
+			console.log($scope.new_category)
+			CategoryService.saveCategory($scope.new_category).success(function(response){
+				console.log(response)
+				if(!response)
+					alert("Couldn't save category.")
+				else{
+					$scope.createCategory.hide();
+					//clean form input
+					$scope.new_category = {};
+					$scope.categories.push(new_category)
+					alert("New category successfully created!")
+				}
+			})
+		};
+	})
+
+	/*.controller('PlaylistsCtrl', function ($scope) {
 		$scope.playlists = [
 			{title: 'Reggae', id: 1},
 			{title: 'Chill', id: 2},
@@ -44,7 +105,7 @@ angular.module('backOffice.controllers', [])
 			{title: 'Rap', id: 5},
 			{title: 'Cowbell', id: 6}
 		];
-	})
+	})*/
 
 	.controller('PlaylistCtrl', function ($scope, $stateParams) {
 	});

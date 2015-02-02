@@ -1,0 +1,19 @@
+<ion-view title="Job Categories">
+	<ion-nav-buttons side="right">
+		<button class="button button-clear icon ion-compose" ng-click="createCategory.show()"></button>
+	</ion-nav-buttons>
+	<ion-content>
+		<div class="cat-table">
+			<div class="header row">
+				<div class="header col col-25">Category</div>
+				<div class="header col-75">Description</div>
+			</div>
+			<div class="table" ng-repeat="category in categories | orderBy:predicate">
+				<div class="table row " ng-class="{'first' : $even, 'second' : $odd}">
+					<div class="table col col-25">{{category.category_name}}</div>
+					<div class=" col-75">{{category.description}}</div>
+				</div>
+			</div>
+		</div>
+	</ion-content>
+</ion-view>

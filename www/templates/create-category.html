@@ -1,0 +1,40 @@
+<ion-modal-view>
+	<ion-header-bar class="bar bar-header bar-dark">
+		<h1 class="title">Create A Category</h1>
+		<button class="button button-clear button-primary icon ion-close-circled"
+				ng-click="createCategory.hide()"></button>
+	</ion-header-bar>
+	<ion-content class="padding">
+		<form name="formCategory" ng-submit="createNewCategory(new_category)" novalidate>
+			<div class="list">
+				<label class="item item-input item-floating-label"
+					   ng-class="{'has-error' : formCategory.category_name.$dirty && formCategory.category_name.$invalid, 'no-error' : formCategory.category_name.$dirty && formCategory.category_name.$valid}">
+					<span class="input-label">Category Name</span>
+
+					<div class="row">
+						<input type="text" placeholder="Category Name . . ." name="category_name" ng-model="new_category.category_name" required>
+						<span class="error-handler col col-10 icon ion-alert-circled assertive"
+							  ng-show="formCategory.category_name.$dirty && formCategory.category_name.$invalid"></span>
+						<span class="error-handler col col-10 icon ion-checkmark-circled balanced"
+							  ng-show="formCategory.category_name.$dirty && formCategory.category_name.$valid"></span>
+					</div>
+				</label>
+
+				<label class="item item-input item-floating-label"
+					   ng-class="{'has-error' : formCategory.description.$dirty && formCategory.description.$invalid, 'no-error' : formCategory.description.$dirty && formCategory.description.$valid}">
+					<span class="input-label">Description</span>
+
+					<div class="row">
+						<textarea placeholder="Description . . ." name="description"
+								  ng-model="new_category.description" required></textarea>
+						<span class="error-handler col col-10 icon ion-alert-circled assertive"
+							  ng-show="formCategory.description.$dirty && formCategory.description.$invalid"></span>
+						<span class="error-handler col col-10 icon ion-checkmark-circled balanced"
+							  ng-show="formCategory.description.$dirty && formCategory.description.$valid"></span>
+					</div>
+				</label>
+			</div>
+			<button class="button button-block button-positive" ng-disabled="formCategory.$invalid">Post Job</button>
+		</form>
+	</ion-content>
+</ion-modal-view>

@@ -1,1 +1,65 @@
-/* Empty. Add your own CSS if you like */
+.form{
+	margin-top: 50px
+}
+/*validation */
+span.error-handler, {
+	text-align: right;
+}
+
+label.has-error {
+	-webkit-box-shadow: 1px 1px 1px 1px #ef4e3a;
+	-moz-box-shadow: 1px 1px 1px 1px #ef4e3a;
+	box-shadow: 1px 1px 1px 1px #ef4e3a;
+}
+
+label.no-error {
+	-webkit-box-shadow: 1px 1px 1px 1px #66cc33;
+	-moz-box-shadow: 1px 1px 1px 1px #66cc33;
+	box-shadow: 1px 1px 1px 1px #66cc33;
+}
+
+.cat-table{
+	margin: 10px 10px 0px 5px;
+}
+
+.header.col{
+	border: 1px solid;
+	padding: 10px;
+}
+
+.header.col-75{
+	border: 1px solid;
+	padding: 10px;
+}
+
+.header.row{
+	padding: 0;
+	background-color: #ffc900;
+	border-color: #e6b400;
+	color: #fff;
+	border-radius: 10px 10px 0px 0px;
+	font-weight: bold;
+}
+
+.table.col{
+	border: 1px solid;
+}
+
+.col-75{
+	border: 1px solid;
+	padding: 5px;
+}
+
+.row.first{
+	border-color: #111;
+	background-color: #b2b2b2;
+	color: #fff;
+	padding: 0;
+}
+
+.row.second{
+	border-color: #111 ;
+	background-color: #fff;
+	color: #b2b2b2;
+	padding: 0;
+}
