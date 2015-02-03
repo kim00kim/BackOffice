@@ -1,7 +1,21 @@
 angular.module('backOffice.controllers', [])
 
-	.controller('AppCtrl', function ($scope, $ionicModal, $timeout) {
+	.controller('AppCtrl', function ($scope, $ionicPopup, AdminService, $state) {
 		// Form data for the login modal
+
+		$scope.logout = function(){
+			// A confirm log out dialog
+			var confirmPopup = $ionicPopup.confirm({
+				title: 'Log Out',
+				template: 'Confirm log out?'
+			});
+			confirmPopup.then(function (res) {
+				if (res) {
+					AdminService.clearStorage()
+					$state.go('login')
+				}
+			});
+		}
 		/*$scope.loginData = {};
 
 		 // Create the login modal that we will use later
@@ -46,7 +60,8 @@ angular.module('backOffice.controllers', [])
 				}
 				else {
 					alert("Logged in successfully!")
-					$state.go('app.skill')
+					AdminService.setAdmin(response)
+					$state.go('app.category')
 				}
 			})
 		}
@@ -83,11 +98,12 @@ angular.module('backOffice.controllers', [])
 				if(!response)
 					alert("Couldn't save category.")
 				else{
+					$scope.createCategory.hide();
 					//clean form input
 					$scope.new_category = {};
 					$scope.categories.push(new_category)
 					alert("New category successfully created!")
-					$scope.createCategory.hide();
+
 				}
 			})
 		};
@@ -139,11 +155,11 @@ angular.module('backOffice.controllers', [])
 					alert("Couldn't save skill.")
 				else{
 					$scope.createSkill.hide();
-
+					$scope.createSkill = {}
 					//clean form input
 					$scope.new_skill = {};
-					$scope.skills.push(new_skill)
-					console.log(new_skill.category.category_id)
+					$scope.skills.push({'skill_name' : new_skill.skill_name, 'job_category' : {'category_name' : new_skill.category.category_name} })
+					console.log({})
 					alert("New skill successfully created!")
 				}
 			})
