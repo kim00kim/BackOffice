@@ -1,0 +1,38 @@
+<ion-modal-view>
+	<ion-header-bar class="bar bar-header bar-dark">
+		<h1 class="title">Create A Skill</h1>
+		<button class="button button-clear button-primary icon ion-close-circled"
+				ng-click="createSkill.hide()"></button>
+	</ion-header-bar>
+	<ion-content class="padding">
+		<form name="formSkill" ng-submit="createNewSkill(new_skill)" novalidate>
+			<label class="item item-input item-select" ng-class="{'no-error' : formSkill.category.$dirty}">
+				<div class="input-label">
+					Choose a Category
+				</div>
+				<select ng-options="category.category_name for category in categories track by category.category_id"
+						ng-model="new_skill.category" name="category">
+				</select>
+				<!--<select ng-repeat="category in categories" ng-options="category.category_id as category.category_name for category in categories"
+						ng-model="new_skill.category.category_id" name="category">-->
+				</select>
+			</label>
+
+			<div class="list">
+				<label class="item item-input item-floating-label"
+					   ng-class="{'has-error' : formSkill.skill_name.$dirty && formSkill.skill_name.$invalid, 'no-error' : formSkill.skill_name.$dirty && formSkill.skill_name.$valid}">
+					<span class="input-label">Category Name</span>
+
+					<div class="row">
+						<input type="text" placeholder="Skill Name . . ." name="skill_name" ng-model="new_skill.skill_name" required>
+						<span class="error-handler col col-10 icon ion-alert-circled assertive"
+							  ng-show="formSkill.skill_name.$dirty && formSkill.skill_name.$invalid"></span>
+						<span class="error-handler col col-10 icon ion-checkmark-circled balanced"
+							  ng-show="formSkill.skill_name.$dirty && formSkill.skill_name.$valid"></span>
+					</div>
+				</label>
+			</div>
+			<button class="button button-block button-positive" ng-disabled="formSkill.$invalid">Create Skill</button>
+		</form>
+	</ion-content>
+</ion-modal-view>

@@ -1,20 +1,20 @@
-<ion-view title="Job Categories">
+<ion-view title="Skills">
 	<ion-nav-buttons side="right">
-		<button class="button button-clear icon ion-compose" ng-click="createCategory.show()"></button>
+		<button class="button button-clear icon ion-compose" ng-click="createSkill.show()"></button>
 	</ion-nav-buttons>
 	<ion-content>
 		<div class="cat-table">
-			<div class="header row energized-bg energized-border">
+			<div class="header row royal-bg royal-border">
 				<div class="header col col-5">No</div>
-				<div class="header col col-20">Category</div>
-				<div class="header col-50">Description</div>
+				<div class="header col col-25">Skill</div>
+				<div class="header col-50">Category</div>
 				<div class="header col col-5">Action</div>
 			</div>
-			<div class="table" ng-repeat="category in categories | orderBy:predicate">
+			<div class="table" ng-repeat="skill in skills| orderBy:predicate">
 				<div class="table row " ng-class="{'first' : $even, 'second' : $odd}">
 					<div class="table col col-5">{{$index + 1}}</div>
-					<div class="table col col-20">{{category.category_name}}</div>
-					<div class="table col-50">{{category.description}}</div>
+					<div class="table col col-25">{{skill.skill_name}}</div>
+					<div class=" col-50">{{skill.job_category.category_name}}</div>
 					<div class="table col col-5"><a class="button button-balanced button-small">Update</a>  <a class="button button-assertive button-small">Delete</a></div>
 				</div>
 			</div>

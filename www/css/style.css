@@ -19,7 +19,7 @@ label.no-error {
 }
 
 .cat-table{
-	margin: 10px 10px 0px 5px;
+	margin: 20px 20px 0px 20px;
 }
 
 .header.col{
@@ -27,15 +27,13 @@ label.no-error {
 	padding: 10px;
 }
 
-.header.col-75{
+.header.col-50{
 	border: 1px solid;
 	padding: 10px;
 }
 
 .header.row{
 	padding: 0;
-	background-color: #ffc900;
-	border-color: #e6b400;
 	color: #fff;
 	border-radius: 10px 10px 0px 0px;
 	font-weight: bold;
@@ -45,21 +43,25 @@ label.no-error {
 	border: 1px solid;
 }
 
-.col-75{
+.col-50{
 	border: 1px solid;
 	padding: 5px;
 }
 
-.row.first{
-	border-color: #111;
-	background-color: #b2b2b2;
-	color: #fff;
-	padding: 0;
+.col-5{
+	text-align: center;
 }
 
 .row.second{
-	border-color: #111 ;
-	background-color: #fff;
-	color: #b2b2b2;
+	border-color: #ffffff;
+	background-color: #3d3d3d;
+	color: #ffffff;
+	padding: 0;
+}
+
+.row.first{
+	border-color: #ffffff;
+	background-color: #ffffff;
+	color: #6c6c6c;
 	padding: 0;
 }

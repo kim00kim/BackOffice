@@ -46,11 +46,7 @@ angular.module('backOffice.controllers', [])
 				}
 				else {
 					alert("Logged in successfully!")
-					$state.go('app.category')
-//					AdminService.setAdmin(response)
-					//UserService.setUser(response)
-					//UserService.setUserType(response.user_type)
-					//var user = UserService.getUserType()
+					$state.go('app.skill')
 				}
 			})
 		}
@@ -73,7 +69,8 @@ angular.module('backOffice.controllers', [])
 
 		$ionicModal.fromTemplateUrl('templates/create-category.html', {
 			scope: $scope,
-			animation: 'slide-in-right' //or slide-left-right-ios7
+			animation: 'slide-in-right', //or slide-left-right-ios7
+			focusFirstInput: true
 		}).then(function (modal) {
 			$scope.createCategory = modal;
 		});
@@ -86,26 +83,72 @@ angular.module('backOffice.controllers', [])
 				if(!response)
 					alert("Couldn't save category.")
 				else{
-					$scope.createCategory.hide();
 					//clean form input
 					$scope.new_category = {};
 					$scope.categories.push(new_category)
 					alert("New category successfully created!")
+					$scope.createCategory.hide();
 				}
 			})
 		};
 	})
 
-	/*.controller('PlaylistsCtrl', function ($scope) {
-		$scope.playlists = [
-			{title: 'Reggae', id: 1},
-			{title: 'Chill', id: 2},
-			{title: 'Dubstep', id: 3},
-			{title: 'Indie', id: 4},
-			{title: 'Rap', id: 5},
-			{title: 'Cowbell', id: 6}
-		];
-	})*/
+	.controller('SkillCtrl', function ($scope, $ionicModal,SkillService, CategoryService) {
+		$scope.new_skill = {};
+		$scope.skills = [];
+
+		SkillService.getAllSkills().success(function(response){
+			console.log(response)
+			if(!response)
+				alert("Couldn't get skills.")
+			else{
+				$scope.predicate = 'skill_name'
+				$scope.skills = response
+//				console.log($scope.categories)
+			}
+		})
+
+		$ionicModal.fromTemplateUrl('templates/create-skill.html', {
+			scope: $scope,
+			animation: 'slide-in-right', //or slide-left-right-ios7
+			focusFirstInput: true
+		}).then(function (modal) {
+			$scope.createSkill = modal;
+			CategoryService.getAllCategories().success(function(response){
+				console.log(response)
+				if(!response)
+					alert("Couldn't get categories.")
+				else{
+					$scope.categories = response
+					$scope.new_skill.category=$scope.categories[0]
+//				console.log($scope.categories)
+				}
+			})
+		});
+
+		//add category in service
+		$scope.createNewSkill = function (new_skill) {
+			var skill = []
+			/*console.log("NEW_SKILL: " + JSON.stringify(new_skill))
+			console.log(new_skill.category.category_id)*/
+			 skill = ({'skill_name': new_skill.skill_name, 'category_id': new_skill.category.category_id})
+			console.log(skill)
+			SkillService.saveSkill(skill).success(function(response){
+				console.log("Res: " + JSON.stringify(response))
+				if(!response)
+					alert("Couldn't save skill.")
+				else{
+					$scope.createSkill.hide();
+
+					//clean form input
+					$scope.new_skill = {};
+					$scope.skills.push(new_skill)
+					console.log(new_skill.category.category_id)
+					alert("New skill successfully created!")
+				}
+			})
+		};
+	})
 
 	.controller('PlaylistCtrl', function ($scope, $stateParams) {
 	});

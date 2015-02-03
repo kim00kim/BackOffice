@@ -45,7 +45,6 @@ angular.module('backOffice.services', [])
 				return $http({method: "POST", url: baseUrl + 'admins', data: admin_input})
 			}
 		}
-
 	})
 
 	.factory('CategoryService', function($http, baseUrl){
@@ -57,5 +56,17 @@ angular.module('backOffice.services', [])
 			getAllCategories: function () {
 				return $http({method: "GET", url: baseUrl + 'allcategories'})
 			}
+		}
+	})
+
+	.factory('SkillService', function($http, baseUrl){
+		return{
+			saveSkill: function (skill) {
+				return $http({method: "POST", url: baseUrl + 'addskills', data: skill})
+			},
+			getAllSkills: function () {
+				return $http({method: "GET", url: baseUrl + 'allskills'})
+			}
+
 		}
 	});

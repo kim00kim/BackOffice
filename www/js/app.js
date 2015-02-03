@@ -42,33 +42,15 @@ angular.module('backOffice', ['ionic', 'backOffice.controllers', 'backOffice.ser
 				}
 			})
 
-			.state('app.search', {
-				url: "/search",
+			.state('app.skill', {
+				url: "/skills",
 				views: {
 					'menuContent': {
-						templateUrl: "templates/search.html"
+						templateUrl: "templates/skill.html",
+						controller: "SkillCtrl"
 					}
 				}
 			})
-
-			.state('app.browse', {
-				url: "/browse",
-				views: {
-					'menuContent': {
-						templateUrl: "templates/browse.html"
-					}
-				}
-			})
-
-			.state('app.single', {
-				url: "/playlists/:playlistId",
-				views: {
-					'menuContent': {
-						templateUrl: "templates/playlist.html",
-						controller: 'PlaylistCtrl'
-					}
-				}
-			});
 
 		// if none of the above states are matched, use this as the fallback
 		$urlRouterProvider.otherwise('/login');
