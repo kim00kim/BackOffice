@@ -67,33 +67,51 @@ angular.module('backOffice.controllers', [])
 		}
 	})
 
-	.controller('CategoryCtrl', function ($scope, $state, $ionicModal, CategoryService) {
+	.controller('CategoryCtrl', function ($scope, $state, $ionicModal, $ionicLoading, CategoryService) {
 		$scope.new_category = {};
 		$scope.categories = [];
 
-		CategoryService.getAllCategories().success(function(response){
-			console.log(response)
-			if(!response)
-				alert("Couldn't get categories.")
-			else{
-				$scope.predicate = 'category_name'
-				$scope.categories = response
+        var display = function(){
+            $ionicLoading.show({
+                content: 'Loading...',
+                animation: 'fade-in',
+                showBackdrop: true,
+                maxWidth: 500,
+                showDelay: 0
+            });
+            CategoryService.getAllCategories().success(function(response){
+                $ionicLoading.hide()
+                console.log(response)
+                if(!response)
+                    alert("Couldn't get categories.")
+                else{
+                    $scope.predicate = 'category_name'
+                    $scope.categories = response
 //				console.log($scope.categories)
-			}
-		})
+                }
+            })
+        }
 
-		$ionicModal.fromTemplateUrl('templates/create-category.html', {
-			scope: $scope,
-			animation: 'slide-in-right', //or slide-left-right-ios7
-			focusFirstInput: true
-		}).then(function (modal) {
-			$scope.createCategory = modal;
-		});
+
+        display()
+        $scope.openModal = function(){
+            $ionicModal.fromTemplateUrl('templates/create-category.html', {
+                scope: $scope,
+                animation: 'slide-in-right', //or slide-left-right-ios7
+                focusFirstInput: true
+            }).then(function (modal) {
+                $scope.createCategory = modal;
+                $scope.createCategory .show()
+            });
+
+        }
+
 
 		//add category in service
 		$scope.createNewCategory = function (new_category) {
 			console.log($scope.new_category)
 			CategoryService.saveCategory($scope.new_category).success(function(response){
+
 				console.log(response)
 				if(!response)
 					alert("Couldn't save category.")
@@ -102,45 +120,62 @@ angular.module('backOffice.controllers', [])
 					//clean form input
 					$scope.new_category = {};
 					$scope.categories.push(new_category)
-					alert("New category successfully created!")
+					//alert("New category successfully created!")
 
 				}
 			})
 		};
 	})
 
-	.controller('SkillCtrl', function ($scope, $ionicModal,SkillService, CategoryService) {
+	.controller('SkillCtrl', function ($scope, $ionicModal,SkillService, CategoryService, $ionicLoading) {
 		$scope.new_skill = {};
 		$scope.skills = [];
 
-		SkillService.getAllSkills().success(function(response){
-			console.log(response)
-			if(!response)
-				alert("Couldn't get skills.")
-			else{
-				$scope.predicate = 'skill_name'
-				$scope.skills = response
+        var display = function () {
+            $ionicLoading.show({
+                content: 'Loading...',
+                animation: 'fade-in',
+                showBackdrop: true,
+                maxWidth: 500,
+                showDelay: 0
+            });
+            SkillService.getAllSkills().success(function(response){
+                $ionicLoading.hide()
+                console.log(response)
+                if(!response)
+                    alert("Couldn't get skills.")
+                else{
+                    $scope.predicate = 'skill_name'
+                    $scope.skills = response
 //				console.log($scope.categories)
-			}
-		})
+                }
+            })
 
-		$ionicModal.fromTemplateUrl('templates/create-skill.html', {
-			scope: $scope,
-			animation: 'slide-in-right', //or slide-left-right-ios7
-			focusFirstInput: true
-		}).then(function (modal) {
-			$scope.createSkill = modal;
-			CategoryService.getAllCategories().success(function(response){
-				console.log(response)
-				if(!response)
-					alert("Couldn't get categories.")
-				else{
-					$scope.categories = response
-					$scope.new_skill.category=$scope.categories[0]
-//				console.log($scope.categories)
-				}
-			})
-		});
+        }
+
+        display()
+
+        $scope.openModal = function () {
+            $ionicModal.fromTemplateUrl('templates/create-skill.html', {
+                scope: $scope,
+                animation: 'slide-in-right', //or slide-left-right-ios7
+                focusFirstInput: true
+            }).then(function (modal) {
+                $scope.createSkill = modal;
+                $scope.createSkill.show()
+                CategoryService.getAllCategories().success(function(response){
+                    console.log(response)
+                    if(!response)
+                        alert("Couldn't get categories.")
+                    else{
+                        $scope.categories = response
+                        $scope.new_skill.category=$scope.categories[0]
+                    }
+                })
+            });
+
+        }
+
 
 		//add category in service
 		$scope.createNewSkill = function (new_skill) {
@@ -160,7 +195,7 @@ angular.module('backOffice.controllers', [])
 					$scope.new_skill = {};
 					$scope.skills.push({'skill_name' : new_skill.skill_name, 'job_category' : {'category_name' : new_skill.category.category_name} })
 					console.log({})
-					alert("New skill successfully created!")
+					//alert("New skill successfully created!")
 				}
 			})
 		};
