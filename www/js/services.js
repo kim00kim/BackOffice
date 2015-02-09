@@ -1,6 +1,6 @@
 angular.module('backOffice.services', [])
 
-	.constant('baseUrl', 'http://127.0.0.1/jobportl/web/api/')
+	.constant('baseUrl', 'http://10.20.1.198/jobportl/web/api/')
 
 	.factory('$localstorage', ['$window', function ($window) {
 		return {
@@ -55,7 +55,11 @@ angular.module('backOffice.services', [])
 			},
 			getAllCategories: function () {
 				return $http({method: "GET", url: baseUrl + 'allcategories'})
+			},
+			deleteCategory: function(category_id){
+				return $http({method: "DELETE", url: baseUrl + 'deletecategories/' + category_id})
 			}
+
 		}
 	})
 
@@ -66,7 +70,11 @@ angular.module('backOffice.services', [])
 			},
 			getAllSkills: function () {
 				return $http({method: "GET", url: baseUrl + 'allskills'})
+			},
+			deleteSkill: function(skill_id){
+				return $http({method: "DELETE", url: baseUrl + 'deleteskills/' + skill_id})
 			}
+
 
 		}
 	});

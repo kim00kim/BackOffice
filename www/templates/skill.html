@@ -17,8 +17,8 @@
 				<div class="table row " ng-class="{'first' : $even, 'second' : $odd}">
 					<div class="table col col-5">{{$index + 1}}</div>
 					<div class="table col col-20">{{skill.skill_name}}</div>
-					<div class=" col-50">{{skill.job_category.category_name}}</div>
-					<div class="table col col-5"><a class="button button-balanced button-small">Update</a>  <a class="button button-assertive button-small">Delete</a></div>
+					<div class=" col-50">{{skill.category.category_name}}</div>
+					<div class="table col col-5"><a class="button button-balanced button-small">Update</a>  <a class="button button-assertive button-small" data-ng-click="delete(skill.skill_id, skill.skill_name)">Delete</a></div>
 				</div>
 			</div>
 		</div>

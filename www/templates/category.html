@@ -1,6 +1,6 @@
-<ion-view title="Job Categories">
+<ion-view title="Categories">
 	<div class="bar bar-subheader">
-		<h2 class="title">Create, update and delete a job category.</h2>
+		<h2 class="title">Create, update and delete a category.</h2>
 	</div>
 	<ion-nav-buttons side="right">
 
@@ -22,7 +22,7 @@
 					<div class="table col col-5">{{$index + 1}}</div>
 					<div class="table col col-20">{{category.category_name}}</div>
 					<div class="table col-50">{{category.description}}</div>
-					<div class="table col col-5"><a class="button button-balanced button-small">Update</a>  <a class="button button-assertive button-small">Delete</a></div>
+					<div class="table col col-5"><a class="button button-balanced button-small">Update</a>  <a class="button button-assertive button-small" data-ng-click="delete(category.category_id, category.category_name)">Delete</a></div>
 				</div>
 			</div>
 		</div>
