@@ -49,9 +49,11 @@ angular.module('backOffice.services', [])
 
 	.factory('CategoryService', function($http, baseUrl){
 		return{
-			saveCategory: function (category) {
-				console.log(category)
-				return $http({method: "POST", url: baseUrl + 'addcategories', data: category})
+			postCategory: function(category){
+				if(category.command=="Create")
+					return $http({method: "POST", url: baseUrl + 'addcategories', data: category})
+				else
+					return $http({method: "POST", url: baseUrl + 'updatecategories', data:category})
 			},
 			getAllCategories: function () {
 				return $http({method: "GET", url: baseUrl + 'allcategories'})
@@ -67,6 +69,12 @@ angular.module('backOffice.services', [])
 		return{
 			saveSkill: function (skill) {
 				return $http({method: "POST", url: baseUrl + 'addskills', data: skill})
+			},
+			postSkill: function(skill){
+				if(skill.command == "Create")
+					return $http({method: "POST", url: baseUrl + 'addskills', data: skill})
+				else
+					return $http({method: "POST", url: baseUrl + 'updateskills', data: skill})
 			},
 			getAllSkills: function () {
 				return $http({method: "GET", url: baseUrl + 'allskills'})

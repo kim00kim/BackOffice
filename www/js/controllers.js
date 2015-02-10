@@ -16,36 +16,6 @@ angular.module('backOffice.controllers', [])
 				}
 			});
 		}
-		/*$scope.loginData = {};
-
-		 // Create the login modal that we will use later
-		 $ionicModal.fromTemplateUrl('templates/login.html', {
-		 scope: $scope
-		 }).then(function(modal) {
-		 $scope.modal = modal;
-		 });
-
-		 // Triggered in the login modal to close it
-		 $scope.closeLogin = function() {
-		 $scope.modal.hide();
-		 };
-
-		 // Open the login modal
-		 $scope.login = function() {
-		 $scope.modal.show();
-		 };
-
-		 // Perform the login action when the user submits the login form
-		 $scope.doLogin = function() {
-		 console.log('Doing login', $scope.loginData);
-
-		 // Simulate a login delay. Remove this and replace with your login
-		 // code if using a login system
-		 $timeout(function() {
-		 $scope.closeLogin();
-		 }, 1000);
-		 };*/
-
 	})
 
 	.controller('LoginCtrl', function ($scope, $state, AdminAccount, AdminService) {
@@ -59,7 +29,6 @@ angular.module('backOffice.controllers', [])
 					alert("Incorrect username and password!")
 				}
 				else {
-					alert("Logged in successfully!")
 					AdminService.setAdmin(response)
 					$state.go('app.category')
 				}
@@ -106,33 +75,50 @@ angular.module('backOffice.controllers', [])
 				}
 			});
 		}
+
+		$scope.update = function(category){
+			console.log(category)
+			$ionicModal.fromTemplateUrl('templates/category-modal.html', {
+				scope: $scope,
+				animation: 'slide-in-right', //or slide-left-right-ios7
+				focusFirstInput: true
+			}).then(function (modal) {
+				$scope.createCategory = modal;
+				$scope.command = "Update"
+				$scope.cat=category
+				$scope.cat.command=$scope.command
+				$scope.createCategory .show()
+			});
+		}
+
+
         $scope.openModal = function(){
-            $ionicModal.fromTemplateUrl('templates/create-category.html', {
+            $ionicModal.fromTemplateUrl('templates/category-modal.html', {
                 scope: $scope,
                 animation: 'slide-in-right', //or slide-left-right-ios7
                 focusFirstInput: true
             }).then(function (modal) {
                 $scope.createCategory = modal;
-                $scope.createCategory .show()
+				$scope.command = "Create"
+				$scope.cat= {'command' : $scope.command}
+                $scope.createCategory.show()
             });
         }
 		//add category in service
-		$scope.createNewCategory = function (new_category) {
-			console.log(new_category)
-			CategoryService.saveCategory(new_category).success(function(response){
+		$scope.commandCategory = function (category) {
+			console.log(category)
+			CategoryService.postCategory(category).success(function(response){
 				console.log(response)
 				if(!response)
-					alert("Couldn't save category.")
+					alert("Couldn't " + category.command+" category.")
 				else{
 					$scope.createCategory.hide();
 					//clean form input
-					$scope.new_category = {};
-					$scope.categories.push(response)
-					//alert("New category successfully created!")
+					$scope.cat = {};
+					display()
 				}
 			})
-		};
-
+		}
 		//display categories on load
 		display()
 	})
@@ -161,15 +147,15 @@ angular.module('backOffice.controllers', [])
             })
         }
 
-        display()
-
         $scope.openModal = function () {
-            $ionicModal.fromTemplateUrl('templates/create-skill.html', {
+            $ionicModal.fromTemplateUrl('templates/skill-modal.html', {
                 scope: $scope,
                 animation: 'slide-in-right', //or slide-left-right-ios7
                 focusFirstInput: true
             }).then(function (modal) {
                 $scope.createSkill = modal;
+				$scope.command= "Create"
+				$scope.new_skill= {'command' : $scope.command}
                 $scope.createSkill.show()
                 CategoryService.getAllCategories().success(function(response){
                     console.log(response)
@@ -184,14 +170,10 @@ angular.module('backOffice.controllers', [])
 
         }
 
-		//add category in service
-		$scope.createNewSkill = function (new_skill) {
-			var skill = []
-			/*console.log("NEW_SKILL: " + JSON.stringify(new_skill))
-			console.log(new_skill.category.category_id)*/
-			 skill = ({'skill_name': new_skill.skill_name, 'category_id': new_skill.category.category_id})
-			console.log(skill)
-			SkillService.saveSkill(skill).success(function(response){
+		//add skill in service
+		$scope.commandSkill = function (new_skill) {
+			new_skill['category_id']= new_skill.category.category_id
+			SkillService.postSkill(new_skill).success(function(response){
 				console.log("Res: " + JSON.stringify(response))
 				if(!response)
 					alert("Couldn't save skill.")
@@ -200,12 +182,35 @@ angular.module('backOffice.controllers', [])
 					$scope.createSkill = {}
 					//clean form input
 					$scope.new_skill = {};
-					$scope.skills.push(/*{'skill_name' : new_skill.skill_name, 'job_category' : {'category_name' : new_skill.category.category_name} }*/response)
-					console.log({})
-					//alert("New skill successfully created!")
+					display()
 				}
 			})
 		};
+
+		$scope.update = function(skill){
+			console.log(skill)
+			$ionicModal.fromTemplateUrl('templates/skill-modal.html', {
+				scope: $scope,
+				animation: 'slide-in-right', //or slide-left-right-ios7
+				focusFirstInput: true
+			}).then(function (modal) {
+				$scope.createSkill = modal;
+				$scope.command = "Update"
+				$scope.skill=skill
+				$scope.skill.command=$scope.command
+				$scope.createSkill.show()
+				CategoryService.getAllCategories().success(function(response){
+					console.log(response)
+					if(!response)
+						alert("Couldn't get categories.")
+					else{
+						$scope.new_skill=skill
+						$scope.categories = response
+						$scope.new_skill.category=skill.category
+					}
+				})
+			});
+		}
 
 		$scope.delete = function(skill_id, skill_name){
 			var confirmPopup = $ionicPopup.confirm({
@@ -222,6 +227,9 @@ angular.module('backOffice.controllers', [])
 				}
 			});
 		}
+
+		//display on load
+		display()
 	})
 
 	.controller('PlaylistCtrl', function ($scope, $stateParams) {
