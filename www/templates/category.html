@@ -7,9 +7,6 @@
 		<button class="button button-clear icon ion-compose" ng-click="openModal()"></button>
 	</ion-nav-buttons>
 	<ion-content>
-
-
-
 		<div class="cat-table">
 			<div class="header row energized-bg energized-border">
 				<div class="header col col-5">No</div>
@@ -22,7 +19,10 @@
 					<div class="table col col-5">{{$index + 1}}</div>
 					<div class="table col col-20">{{category.category_name}}</div>
 					<div class="table col-50">{{category.description}}</div>
-					<div class="table col col-5"><a class="button button-balanced button-small">Update</a>  <a class="button button-assertive button-small" data-ng-click="delete(category.category_id, category.category_name)">Delete</a></div>
+					<div class="table col col-5">
+						<a class="button button-balanced button-small" data-ng-click="update(category)">Update</a>
+						<a class="button button-assertive button-small" data-ng-click="delete(category.category_id, category.category_name)">Delete</a>
+					</div>
 				</div>
 			</div>
 		</div>
